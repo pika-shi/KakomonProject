@@ -5,6 +5,9 @@
 <title>Top Page - kakomon</title>
 </head>
 <body>
-{{ message }}
+{{ form()|safe }}
+{% for k in k_file %}
+<a href="{{ k.tmp }}">aaa</a>
+{% endfor %}
 </body>
 </html>

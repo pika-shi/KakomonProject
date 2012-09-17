@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # kakomon.urls
-# 
+#
 
 # Following few lines is an example urlmapping with an older interface.
 """
@@ -25,6 +25,8 @@ from kay.routing import (
 view_groups = [
   ViewGroup(
     Rule('/', endpoint='index', view='kakomon.views.index'),
+    Rule('/<grade>', endpoint='lectures', view='kakomon.views.lectures'),
+    Rule('/upload', endpoint='upload', view='kakomon.views.upload'),
   )
 ]
 

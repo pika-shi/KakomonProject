@@ -3,11 +3,21 @@ from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, Templa
 name = '/index.html'
 
 def root(context, environment=environment):
-    l_message = context.resolve('message')
+    l_k_file = context.resolve('k_file')
+    l_form = context.resolve('form')
+    t_1 = environment.filters['safe']
     if 0: yield None
-    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Top Page - kakomon</title>\n</head>\n<body>\n%s\n</body>\n</html>' % (
-        escape(l_message), 
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Top Page - kakomon</title>\n</head>\n<body>\n%s\n' % (
+        escape(t_1(context.call(l_form))), 
     )
+    l_k = missing
+    for l_k in l_k_file:
+        if 0: yield None
+        yield u'\n<a href="%s">aaa</a>\n' % (
+            escape(environment.getattr(l_k, 'tmp')), 
+        )
+    l_k = missing
+    yield u'\n</body>\n</html>'
 
 blocks = {}
-debug_info = '1=8&8=9'
+debug_info = '1=10&8=11&9=14&10=17&11=20'

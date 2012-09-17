@@ -25,10 +25,29 @@ from kay.auth.decorators import login_required
 
 """
 
-from kay.utils import render_to_response
+from werkzeug import redirect, Response
+from kay.utils import (render_to_response, url_for)
 
+from kakomon.models import Kakomon
+from kakomon.forms import UploadForm
 
 # Create your views here.
 
 def index(request):
-  return render_to_response('kakomon/index.html', {'message': 'Hello'})
+  form = UploadForm()
+  if request.method == "POST" and form.validate(request.form, request.files):
+    kakomon = Kakomon(file=form['upload_file'])
+    kakomon.tmp = 1
+    kakomon.put()
+    return Response(mimetype=request.files['upload_file'].content_type, response=form['upload_file'])
+    #return redirect(url_for('kakomon/index'))
+  k_file = Kakomon.all().fetch(1)
+  return render_to_response('kakomon/index.html',
+                            {'form': form.as_widget(),
+                             'k_file': k_file})
+
+def lectures(request, grade):
+  pass
+
+def upload(request):
+  pass
