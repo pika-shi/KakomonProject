@@ -5,9 +5,13 @@
 <title>Top Page - kakomon</title>
 </head>
 <body>
-<a href = "authorize">管理ページ</a><br>
-{% for i in range(1,5) %}
-<a href="lectures/{{ i }}">{{ i }}回生</a><br>
+<h1>{{ grade }}回生</h1>
+{% for lecture in lectures %}
+{{ lecture.name }}<br>
+{{ lecture.comment }}<br>
+  {% for kakomon in kakomons_dict[lecture.id] %}
+    {{ kakomon.file }}
+  {% endfor %}<br><br>
 {% endfor %}
 </body>
 </html>

@@ -5,9 +5,8 @@
 <title>Top Page - kakomon</title>
 </head>
 <body>
-<a href = "authorize">管理ページ</a><br>
-{% for i in range(1,5) %}
-<a href="lectures/{{ i }}">{{ i }}回生</a><br>
+{% for lecture in lectures %}
+<a href="manage/{{ lecture.id }}">{{ lecture.name }}<br>
 {% endfor %}
 </body>
 </html>

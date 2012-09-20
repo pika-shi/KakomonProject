@@ -33,6 +33,5 @@ view_groups = [
          view='kay.handlers.task.task_handler'),
     Rule('/maintenance_page', endpoint='_internal/maintenance_page',
          view='kay._internal.views.maintenance_page'),
-    Rule('/', endpoint='index', view='kakomon.views.index'),
   )
 ]
