@@ -10,7 +10,8 @@
 {{ lecture.name }}<br>
 {{ lecture.comment }}<br>
   {% for kakomon in kakomons_dict[lecture.id] %}
-    {{ kakomon.file }}
+    <a href="/download/{{ lecture.id }}/{{ lecture.name }}_{{
+             kakomon.year }}.{{ kakomon.ext }}">{{ kakomon.year }}</a>
   {% endfor %}<br><br>
 {% endfor %}
 </body>

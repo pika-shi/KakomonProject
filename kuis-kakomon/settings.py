@@ -23,6 +23,7 @@ ADMINS = (
 )
 
 TEMPLATE_DIRS = (
+    'kakomon/templetes',
 )
 
 USE_I18N = False

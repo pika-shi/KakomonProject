@@ -31,46 +31,7 @@ from kay.utils import (render_to_response, url_for)
 from kakomon.models import Lecture, Kakomon
 from kakomon.forms import (UploadForm, PasswordForm)
 
-# Create your views here.
-
 def index(request):
-  '''
-  form = UploadForm()
-  if request.method == "POST" and form.validate(request.form, request.files):
-    kakomon = Kakomon(file=form['upload_file'])
-    kakomon.tmp = 1
-    kakomon.put()
-    return Response(mimetype=request.files['upload_file'].content_type, response=form['upload_file'])
-    #return redirect(url_for('kakomon/index'))
-  k_file = Kakomon.all().fetch(1)
-  return render_to_response('kakomon/index.html',
-                            {'form': form.as_widget(),
-                             'k_file': k_file})
-  '''
-  '''
-  Lecture(id=1,name='A',grade=2,semester=1,comment='hogehoge').put()
-  Lecture(id=2,name='B',grade=2,semester=1,comment='hogehoge').put()
-  Lecture(id=3,name='C',grade=2,semester=1,comment='hogehoge').put()
-  Lecture(id=4,name='D',grade=2,semester=2,comment='hogehoge').put()
-  Lecture(id=5,name='E',grade=2,semester=2,comment='hogehoge').put()
-  Lecture(id=6,name='F',grade=3,semester=1,comment='hogehoge').put()
-  Lecture(id=7,name='G',grade=3,semester=1,comment='hogehoge').put()
-
-  Kakomon(lecture=Lecture.all().filter('id =', 1).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 1).get(),year=2011,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 2).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 2).get(),year=2011,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 3).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 3).get(),year=2011,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 4).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 4).get(),year=2011,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 5).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 5).get(),year=2011,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 6).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 6).get(),year=2011,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 7).get(),year=2010,file='hogehoge').put()
-  Kakomon(lecture=Lecture.all().filter('id =', 7).get(),year=2011,file='hogehoge').put()
-  '''
   return render_to_response('kakomon/index.html')
 
 def lectures(request, grade):
@@ -83,8 +44,10 @@ def lectures(request, grade):
                              'lectures': lectures,
                              'kakomons_dict': kakomons_dict})
 
-def download(request, name, year):
-  pass
+def download(request, id, name, year, ext):
+  lecture = Lecture.all().filter('id =', id).get()
+  kakomon = Kakomon.all().filter('lecture =', lecture).filter('year =', year).get()
+  return Response(mimetype=kakomon.mimetype, response=kakomon.file)
 
 def authorize(request):
   form = PasswordForm()
@@ -101,5 +64,12 @@ def manage(request):
                             {'lectures': lectures})
 
 def manage_lectures(request, id):
+  form = UploadForm()
+  if request.method == "POST" and form.validate(request.form, request.files):
+    lecture = Lecture.all().filter('id =', id).get()
+    mimetype = request.files['file'].content_type
+    ext = request.files['file'].filename.split('.')[1]
+    Kakomon(lecture=lecture, year=form['year'],
+            file=form['file'], mimetype=mimetype, ext=ext).put()
   return render_to_response('kakomon/manage_lecture.html',
-                            {'id': id})
+                            {'form': form.as_widget()})

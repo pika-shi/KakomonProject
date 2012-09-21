@@ -26,7 +26,7 @@ view_groups = [
   ViewGroup(
     Rule('/', endpoint='index', view='kakomon.views.index'),
     Rule('/lectures/<int:grade>', endpoint='lectures', view='kakomon.views.lectures'),
-    Rule('/download/<name>/<int:year>', endpoint='download', view='kakomon.views.download'),
+    Rule('/download/<int:id>/<name>_<int:year>.<ext>', endpoint='download', view='kakomon.views.download'),
     Rule('/authorize', endpoint='authorize', view='kakomon.views.authorize'),
     Rule('/manage', endpoint='manage', view='kakomon.views.manage'),
     Rule('/manage/<int:id>', endpoint='manage_lectures', view='kakomon.views.manage_lectures'),

@@ -12,6 +12,6 @@ class Lecture(db.Model):
 class Kakomon(db.Model):
     lecture = db.ReferenceProperty(Lecture)
     year = db.IntegerProperty(required=True)
-    #file = db.BlobProperty(required=True)
-    file = db.StringProperty(required=True)
-
+    file = db.BlobProperty(required=True)
+    mimetype = db.StringProperty()
+    ext = db.StringProperty()
