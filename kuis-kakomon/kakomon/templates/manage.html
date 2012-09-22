@@ -1,6 +1,18 @@
 {% extends "base.html" %}
+{% block title %}管理ページ{% endblock %}
 {% block content %}
-{% for lecture in lectures %}
-<a href="manage/{{ lecture.id }}">{{ lecture.name }}<br>
+<div style="border-bottom: 1px solid #cccccc;">
+  <h1>管理ページ</h1>
+</div><br>
+{% for i in range(4) %}
+  <h3>{{ i+1 }}回生</h3>
+  <table class="table" width="100%">
+  {% for lecture in lectures[i] %}
+    {% if loop.index % 2 == 1 %}<tr>{% endif %}
+    <td width="50%"><div style="font-size: 16px"><a href="manage/{{ lecture.id }}">{{ lecture.name }}</a></div></td>
+    {% if loop.index % 2 == 0 %}</tr>{% endif %}
+    {% if loop.last and loop.index % 2 == 1 %}<td></td></tr>{% endif %}
+  {% endfor %}
+  </table>
 {% endfor %}
 {% endblock %}

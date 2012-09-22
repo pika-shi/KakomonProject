@@ -1,10 +1,22 @@
 {% extends "base.html" %}
+{% block title %}ログイン{% endblock %}
 {% block content %}
 <div align="center">
+  <div class="row">
+    <div class="span4"></div>
+    <div class="span4">
+{% if method == "POST" %}
+    <div class="alert alert-error">
+      {% for i in range(10) %}&nbsp;{% endfor %}
+      パスワードが違います．
+    </div>
+  {% endif %}
+    </div>
+    <div class="span4"></div>
+  </div>
 {% call form() %}
   {{ form['password'].label(class_="password_label")|safe }}
   {{ form['password'].render()|safe }}
-  {{ form['password'].errors()|safe }}<br>
   <div style="padding-top: 5px;">
     <button type="submit" value="Submit" class="btn">ログイン</button>
   </div>
