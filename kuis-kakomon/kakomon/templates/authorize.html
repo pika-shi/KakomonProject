@@ -1,13 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Top Page - kakomon</title>
-</head>
-<body>
-{% if method == 'POST' %}
-パスワードが違うよ
-{% endif %}
-{{ form()|safe }}
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div align="center">
+{% call form() %}
+  {{ form['password'].label(class_="password_label")|safe }}
+  {{ form['password'].render()|safe }}
+  {{ form['password'].errors()|safe }}<br>
+  <div style="padding-top: 5px;">
+    <button type="submit" value="Submit" class="btn">ログイン</button>
+  </div>
+{% endcall %}
+</div>
+{% endblock %}
