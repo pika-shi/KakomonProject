@@ -5,7 +5,7 @@
   <h2>{{ lecture.name }}の編集</h2>
 </div><br>
 <div style="font-size: 18px;"><input type="checkbox" name="check" value="check"
-     onclick="formAppear();" />ファイルのアップロード</div><br>
+     onclick="formAppear();" />&nbsp;ファイルのアップロード</div><br>
 <div class="row">
   <div class="span1"></div>
   <div class="span11">
@@ -22,7 +22,7 @@
 </div>
 
 <div style="font-size: 18px;"><input type="checkbox" name="check" value="check"
-     onclick="formAppear();" />コメントの編集</div><br>
+     onclick="formAppear();" />&nbsp;コメントの編集</div><br>
 <div class="row">
   <div class="span1"></div>
   <div class="span11">
@@ -37,19 +37,20 @@
 </div>
 
 <div style="font-size: 18px;"><input type="checkbox" name="check" value="check"
-     onclick="formAppear();" />ファイルの削除</div><br>
+     onclick="formAppear();" />&nbsp;ファイルの削除</div><br>
 <div class="row">
   <div class="span1"></div>
   <div class="span11">
-    {% for kakomon in kakomons %}
-      <div style="font-size: 18px; display: inline;">
-        <input type="checkbox" name="kakomon" value="kakomon">&nbsp;{{ kakomon.year }}年
-      </div>&nbsp;
-    {% endfor %}
-    <div style="padding-top: 15px;">
-      <button type="submit" value="Submit" class="btn">削除</button>
+    <div class="delete">
+      {% call delete_form() %}
+      {{ delete_form['years'].render()|safe }}
+      <div class="actions" style="padding-top: 5px;">
+        <button type="submit" value="Submit" class="btn"
+     onclick="confirm('本当に削除しますか')">削除</button>
+      </div>
+      {% endcall %}
     </div>
   </div>
 </div>
-{{ delete_form()|safe }}
+{{ tmp }}
 {% endblock %}

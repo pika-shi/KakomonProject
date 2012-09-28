@@ -28,7 +28,7 @@ from kay.auth.decorators import login_required
 from werkzeug import redirect, Response
 from kay.utils import (render_to_response, url_for)
 
-from kakomon.models import Lecture, Kakomon
+from kakomon.models import (Lecture, Kakomon)
 from kakomon.forms import (PasswordForm, UploadForm, CommentForm, DeleteForm)
 
 def index(request):
@@ -76,21 +76,32 @@ def manage(request):
 
 def manage_lectures(request, id):
   lecture = Lecture.all().filter('id =', id).get()
-  kakomons = Kakomon.all().filter('lecture =', lecture)
 
   upload_form = UploadForm()
   comment_form = CommentForm({'comment': lecture.comment})
   delete_form = DeleteForm()
-  #delete_form['choices'].choices = [2, 3, 4]
 
   if request.method == "POST" and upload_form.validate(request.form, request.files):
     mimetype = request.files['file'].content_type
     ext = request.files['file'].filename.split('.')[1]
     Kakomon(lecture=lecture, year=upload_form['year'],
             file=upload_form['file'], mimetype=mimetype, ext=ext).put()
+
+  if request.method == "POST" and comment_form.validate(request.form):
+    lecture.comment = comment_form['comment']
+
+  if request.method == "POST" and delete_form.validate(request.form):
+    for year in delete_form['years']:
+      kakomons = Kakomon.all().filter('lecture =', lecture)
+      kakomons.filter('year =', year).get().delete()
+
+  years = []
+  for kakomon in Kakomon.all().filter('lecture =', lecture).order('year'):
+    years.append(kakomon.year)
+  delete_form.years.choices = years
+
   return render_to_response('kakomon/manage_lecture.html',
                             {'file_form': upload_form.as_widget(),
                              'comment_form': comment_form.as_widget(),
                              'delete_form': delete_form.as_widget(),
-                             'lecture': lecture,
-                             'kakomons': kakomons})
+                             'lecture': lecture})
