@@ -2,42 +2,55 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} - KUIS過去問置き場</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
-    <script type="text/javascript" src="style/bootstrap.js"></script>
-    <link rel="stylesheet" href="style/css/bootstrap.css" type="text/css">
-    <!--<style type="text/css">
-          body {
-          padding-top: 40px;
-          padding-bottom: 40px;
-          }
-          .sidebar-nav {
-          padding: 9px 0;
-          }
-          a:link {
-          color: "#333333";
-          }
-          a:visited {
-          color: "#333333";
-          }
-    </style>-->
+    <script type="text/javascript" src="{{ internal_media_url }}/js/bootstrap.js"></script>
+    {% block js %}{% endblock %}
+    <link rel="stylesheet" href="{{ internal_media_url }}/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="{{ internal_media_url }}/css/bootstrap.responsive.css" type="text/css">
+    <style type="text/css">
+    body { padding-top: 60px; padding-bottom: 40px;}
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+    .pass_label {
+      font-size: 20px;
+      padding-bottom: 10px;
+    }
+    .edit_label {
+      font-size: 18px;
+      padding-bottom: 3px;
+    }
+    input ,select{
+      vertical-align:2px;
+      display: inline;
+    }
+    textarea {
+      width: 300px;
+      height: 100px;
+    }
+    label {
+      font-size: 16px;
+    }
+    .delete label {
+      display: inline;
+      padding-left: 3px;
+      padding-right: 10px;
+    }
+    li {
+      display: inline;
+    }
+    </style>
   </head>
     <body>
       <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-          <div class="container-fluid">
-
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </a>
-
+          <div class="container">
             <a class="brand" href="/">KUIS過去問置き場</a>
             <div class="nav-collapse">
               <ul class="nav">
-                <li class="active"><a href="/">ホーム</a></li>
-                <li><a href="/authorize">管理ページ</a></li>
+                <li><a href="/">ホーム</a></li>
+                <li><a href={% block url %}"/authorize"{% endblock %}>管理ページ</a></li>
               </ul>
             </div>
           </div>
@@ -46,16 +59,16 @@
 
       <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span2">
-            </div>
-            <div class="span8" style="background-color: #ffffff; padding-right: 10%; padding-left: 10%; padding-bottom: 1%;">
+          <div class="span2">
+          </div>
+          <div class="span8" style="background-color: #ffffff; padding: 2% 3% 1%;">
             {% block content %}{% endblock %}
-              <footer style="text-align: center;">
-                Copyright (C) 2012 <a href="https://twitter.com/pika_shi">pika_shi</a> All Rights Reserved
-              </footer>
-            </div>
-            <div class="span2">
-            </div>
+            <footer style="text-align: center;">
+              Copyright (C) 2012 <a href="https://twitter.com/pika_shi">pika_shi</a> All Rights Reserved
+            </footer>
+          </div>
+          <div class="span2">
+          </div>
         </div>
       </div>
     </body>
