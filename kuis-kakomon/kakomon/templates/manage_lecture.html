@@ -1,12 +1,20 @@
 {% extends "base.html" %}
+{% block url %}"/manage"{% endblock %}
 {% block title %}{{ lecture.name }}の編集{% endblock %}
 {% block content %}
 <div style="border-bottom: 1px solid #cccccc;">
   <h2>{{ lecture.name }}の編集</h2>
 </div><br>
-<div style="font-size: 18px;"><input type="checkbox" name="check" value="check"
-     onclick="formAppear();" />&nbsp;ファイルのアップロード</div><br>
-<div class="row">
+{% if flag == 'upload' %}
+<div class ="well" style="font-size: 17px;">ファイルをアップロードしました</div>
+{% elif flag == 'comment' %}
+<div class ="well" style="font-size: 17px;">コメントを更新しました</div>
+{% elif flag == 'delete' %}
+<div class ="well" style="font-size: 17px;">ファイルを削除しました</div>
+{% endif %}
+<div style="font-size: 18px;"><input type="checkbox" name="upload" value="check"
+     onclick="formAppear('upload');" />&nbsp;ファイルのアップロード</div><br>
+<div class="row" id="upload">
   <div class="span1"></div>
   <div class="span11">
     {% call file_form() %}
@@ -15,15 +23,15 @@
     {{ file_form['file'].label(class_="edit_label")|safe }}
     {{ file_form['file'].render()|safe }}
     <div style="padding-top: 15px;">
-      <button type="submit" value="Submit" class="btn">アップロード</button>
+      <button type="submit" value="Submit" class="btn" onclick="return uploadConfirm();">アップロード</button>
     </div>
     {% endcall %}
   </div>
 </div>
 
-<div style="font-size: 18px;"><input type="checkbox" name="check" value="check"
-     onclick="formAppear();" />&nbsp;コメントの編集</div><br>
-<div class="row">
+<div style="font-size: 18px;"><input type="checkbox" name="comment" value="check"
+     onclick="formAppear('comment');" />&nbsp;コメントの編集</div><br>
+<div class="row" id="comment">
   <div class="span1"></div>
   <div class="span11">
     {% call comment_form() %}
@@ -36,9 +44,9 @@
   </div>
 </div>
 
-<div style="font-size: 18px;"><input type="checkbox" name="check" value="check"
-     onclick="formAppear();" />&nbsp;ファイルの削除</div><br>
-<div class="row">
+<div style="font-size: 18px;"><input type="checkbox" name="delete" value="check"
+     onclick="formAppear('delete');" />&nbsp;ファイルの削除</div><br>
+<div class="row" id="delete">
   <div class="span1"></div>
   <div class="span11">
     <div class="delete">
@@ -46,11 +54,43 @@
       {{ delete_form['years'].render()|safe }}
       <div class="actions" style="padding-top: 5px;">
         <button type="submit" value="Submit" class="btn"
-     onclick="confirm('本当に削除しますか')">削除</button>
+     onclick="return confirm('本当に削除しますか');">削除</button>
       </div>
       {% endcall %}
     </div>
   </div>
 </div>
 {{ tmp }}
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+function uploadConfirm() {
+  var years = [];
+  {% for year in years %}
+  years.push({{ year }});
+  {% endfor %}
+  index = document.getElementsByName('year')[0].selectedIndex;
+  selectedYear = document.getElementsByName('year')[0].options[index].value;
+  for (var i = 0; i < years.length; i++) {
+    if (years[i] == selectedYear) {
+      return confirm(selectedYear + '年のファイルはすでに存在しますがアップロードしますか');
+    }
+  }
+}
+
+function formAppear(check) {
+  element = document.getElementsByName(check);
+  if (element[0].checked) {
+    document.getElementById(check).style.display = "";
+  } else {
+    document.getElementById(check).style.display = "none";
+  }
+}
+
+window.onload = function() {
+  document.getElementById('upload').style.display = "none";
+  document.getElementById('comment').style.display = "none";
+  document.getElementById('delete').style.display = "none";
+}
+</script>
 {% endblock %}

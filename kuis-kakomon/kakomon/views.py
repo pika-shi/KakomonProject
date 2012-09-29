@@ -76,24 +76,30 @@ def manage(request):
 
 def manage_lectures(request, id):
   lecture = Lecture.all().filter('id =', id).get()
+  edit_flag = ''
 
   upload_form = UploadForm()
   comment_form = CommentForm({'comment': lecture.comment})
   delete_form = DeleteForm()
 
   if request.method == "POST" and upload_form.validate(request.form, request.files):
+    edit_flag = 'upload'
+    kakomon = Kakomon.all().filter('lecture =', lecture).filter('year =', upload_form['year']).get()
+    if kakomon: kakomon.delete()
     mimetype = request.files['file'].content_type
     ext = request.files['file'].filename.split('.')[1]
     Kakomon(lecture=lecture, year=upload_form['year'],
             file=upload_form['file'], mimetype=mimetype, ext=ext).put()
 
-  if request.method == "POST" and comment_form.validate(request.form):
-    lecture.comment = comment_form['comment']
-
-  if request.method == "POST" and delete_form.validate(request.form):
+  elif request.method == "POST" and delete_form.validate(request.form) and delete_form['years']:
+    edit_flag = 'delete'
     for year in delete_form['years']:
       kakomons = Kakomon.all().filter('lecture =', lecture)
       kakomons.filter('year =', year).get().delete()
+
+  elif request.method == "POST" and comment_form.validate(request.form):
+    edit_flag = 'comment'
+    lecture.comment = comment_form['comment']
 
   years = []
   for kakomon in Kakomon.all().filter('lecture =', lecture).order('year'):
@@ -104,4 +110,6 @@ def manage_lectures(request, id):
                             {'file_form': upload_form.as_widget(),
                              'comment_form': comment_form.as_widget(),
                              'delete_form': delete_form.as_widget(),
-                             'lecture': lecture})
+                             'lecture': lecture,
+                             'years': years,
+                             'flag': edit_flag})
