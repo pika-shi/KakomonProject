@@ -1,0 +1,55 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/lectures.html'
+
+def root(context, environment=environment):
+    parent_template = None
+    if 0: yield None
+    parent_template = environment.get_template('kakomon/base.html', '/lectures.html')
+    for name, parent_block in parent_template.blocks.iteritems():
+        context.blocks.setdefault(name, []).append(parent_block)
+    for event in parent_template.root_render_func(context):
+        yield event
+
+def block_content(context, environment=environment):
+    l_grade = context.resolve('grade')
+    l_lectures = context.resolve('lectures')
+    if 0: yield None
+    yield u'\n<div style="border-bottom: 1px solid #cccccc;">\n  <h1>%s\u56de\u751f</h1>\n</div><br>\n' % (
+        escape(l_grade), 
+    )
+    l_alert_list = ['error', 'info', 'success', 'block']
+    yield u'\n'
+    l_lecture = missing
+    l_kakomons_dict = context.resolve('kakomons_dict')
+    for l_lecture in l_lectures:
+        if 0: yield None
+        yield u'\n  <div class="well" style="padding-top:0px;">\n  <h3>%s</h3>\n  <div class="alert alert-%s">\n    <div style="color: #333333; font-size: 15px;">%s</div>\n  </div>\n  <div style="font-size: 16px;">\n  \u904e\u53bb\u554f:&nbsp;\n  ' % (
+            escape(environment.getattr(l_lecture, 'name')), 
+            escape(environment.getitem(l_alert_list, (l_grade - 1))), 
+            escape(environment.getattr(l_lecture, 'comment')), 
+        )
+        l_kakomon = missing
+        for l_kakomon in environment.getitem(l_kakomons_dict, environment.getattr(l_lecture, 'id')):
+            if 0: yield None
+            yield u'\n    <a href="/download/%s/%s_%s.%s">%s\u5e74 (%s)</a>&nbsp;&nbsp;\n  ' % (
+                escape(environment.getattr(l_lecture, 'id')), 
+                escape(environment.getattr(l_lecture, 'name')), 
+                escape(environment.getattr(l_kakomon, 'year')), 
+                escape(environment.getattr(l_kakomon, 'ext')), 
+                escape(environment.getattr(l_kakomon, 'year')), 
+                escape(environment.getattr(l_kakomon, 'teacher')), 
+            )
+        l_kakomon = missing
+        yield u'\n  </div>\n  </div>\n  <br>\n'
+    l_lecture = missing
+    yield u'\n'
+
+def block_title(context, environment=environment):
+    l_grade = context.resolve('grade')
+    if 0: yield None
+    yield escape(l_grade)
+    yield u'\u56de\u751f'
+
+blocks = {'content': block_content, 'title': block_title}
+debug_info = '1=8&3=14&5=19&7=21&8=25&10=28&11=29&12=30&16=33&17=36&18=38&19=41&20=44&24=46&2=48'

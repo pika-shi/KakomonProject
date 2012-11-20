@@ -1,0 +1,41 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/base.html'
+
+def root(context, environment=environment):
+    l_internal_media_url = context.resolve('internal_media_url')
+    if 0: yield None
+    yield u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n<html>\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <title>'
+    for event in context.blocks['title'][0](context):
+        yield event
+    yield u' - KUIS\u904e\u53bb\u554f\u7f6e\u304d\u5834</title>\n    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>\n    <script type="text/javascript" src="%s/js/bootstrap.js"></script>\n    ' % (
+        escape(l_internal_media_url), 
+    )
+    for event in context.blocks['js'][0](context):
+        yield event
+    yield u'\n    <link rel="stylesheet" href="%s/css/bootstrap.css" type="text/css">\n    <link rel="stylesheet" href="%s/css/bootstrap.responsive.css" type="text/css">\n    <style type="text/css">\n    body { padding-top: 60px; padding-bottom: 40px;}\n    .sidebar-nav {\n      padding: 9px 0;\n    }\n    .pass_label {\n      font-size: 20px;\n      padding-bottom: 10px;\n    }\n    .edit_label {\n      font-size: 18px;\n      padding-bottom: 3px;\n    }\n    input ,select{\n      vertical-align:2px;\n      display: inline;\n    }\n    textarea {\n      width: 300px;\n      height: 100px;\n    }\n    label {\n      font-size: 16px;\n    }\n    .delete label {\n      display: inline;\n      padding-left: 3px;\n      padding-right: 10px;\n    }\n    li {\n      display: inline;\n    }\n    </style>\n  </head>\n    <body>\n      <div class="navbar navbar-fixed-top">\n        <div class="navbar-inner">\n          <div class="container">\n            <a class="brand" href="/">KUIS\u904e\u53bb\u554f\u7f6e\u304d\u5834</a>\n            <div class="nav-collapse">\n              <ul class="nav">\n                <li><a href="/">\u30db\u30fc\u30e0</a></li>\n                <li><a href=' % (
+        escape(l_internal_media_url), 
+        escape(l_internal_media_url), 
+    )
+    for event in context.blocks['url'][0](context):
+        yield event
+    yield u'>\u7ba1\u7406\u30da\u30fc\u30b8</a></li>\n              </ul>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="container-fluid">\n        <div class="row-fluid">\n          <div class="span2">\n          </div>\n          <div class="span8" style="background-color: #ffffff; padding: 2% 3% 1%;">\n            '
+    for event in context.blocks['content'][0](context):
+        yield event
+    yield u'\n            <footer style="text-align: center;">\n              Copyright (C) 2012 <a href="https://twitter.com/pika_shi">pika_shi</a> All Rights Reserved\n            </footer>\n          </div>\n          <div class="span2">\n          </div>\n        </div>\n      </div>\n    </body>\n</html>\n'
+
+def block_url(context, environment=environment):
+    if 0: yield None
+    yield u'"/authorize"'
+
+def block_content(context, environment=environment):
+    if 0: yield None
+
+def block_js(context, environment=environment):
+    if 0: yield None
+
+def block_title(context, environment=environment):
+    if 0: yield None
+
+blocks = {'url': block_url, 'content': block_content, 'js': block_js, 'title': block_title}
+debug_info = '1=8&5=9&7=12&8=14&9=17&10=18&53=20&65=23&53=27&65=31&8=34&5=37'

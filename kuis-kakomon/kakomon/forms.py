@@ -9,11 +9,11 @@ class PasswordForm(forms.Form):
 
 class UploadForm(forms.Form):
       year = forms.ChoiceField(choices=year_list, required=True, label='年度'.decode('utf-8'))
+      teacher = forms.TextField(required=True, label='担当教員'.decode('utf-8'))
       file = forms.FileField(required=True, label='ファイル'.decode('utf-8'))
 
 class CommentForm(forms.Form):
       comment = forms.TextField(required=True, label='コメント'.decode('utf-8'), widget=forms.Textarea)
 
 class DeleteForm(forms.Form):
-      #choices = forms.MultiChoiceField(choices=[1,2,3], widget=forms.CheckboxGroup)
       years = forms.MultiChoiceField(choices=year_list, widget=forms.CheckboxGroup)

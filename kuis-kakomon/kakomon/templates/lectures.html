@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "kakomon/base.html" %}
 {% block title %}{{ grade }}回生{% endblock %}
 {% block content %}
 <div style="border-bottom: 1px solid #cccccc;">
@@ -15,7 +15,8 @@
   過去問:&nbsp;
   {% for kakomon in kakomons_dict[lecture.id] %}
     <a href="/download/{{ lecture.id }}/{{ lecture.name }}_{{
-             kakomon.year }}.{{ kakomon.ext }}">{{ kakomon.year }}年</a>&nbsp;&nbsp;
+             kakomon.year }}.{{ kakomon.ext }}">{{ kakomon.year }}年 ({{
+    kakomon.teacher }})</a>&nbsp;&nbsp;
   {% endfor %}
   </div>
   </div>

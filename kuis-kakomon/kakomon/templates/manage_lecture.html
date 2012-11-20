@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "kakomon/base.html" %}
 {% block url %}"/manage"{% endblock %}
 {% block title %}{{ lecture.name }}の編集{% endblock %}
 {% block content %}
@@ -20,6 +20,8 @@
     {% call file_form() %}
     {{ file_form['year'].label(class_="edit_label")|safe }}
     {{ file_form['year'].render()|safe }}
+    {{ file_form['teacher'].label(class_="edit_label")|safe }}
+    {{ file_form['teacher'].render()|safe }}
     {{ file_form['file'].label(class_="edit_label")|safe }}
     {{ file_form['file'].render()|safe }}
     <div style="padding-top: 15px;">

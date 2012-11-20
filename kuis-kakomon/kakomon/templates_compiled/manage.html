@@ -1,0 +1,60 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/manage.html'
+
+def root(context, environment=environment):
+    parent_template = None
+    if 0: yield None
+    parent_template = environment.get_template('kakomon/base.html', '/manage.html')
+    for name, parent_block in parent_template.blocks.iteritems():
+        context.blocks.setdefault(name, []).append(parent_block)
+    for event in parent_template.root_render_func(context):
+        yield event
+
+def block_url(context, environment=environment):
+    if 0: yield None
+    yield u'"/manage"'
+
+def block_content(context, environment=environment):
+    l_range = context.resolve('range')
+    if 0: yield None
+    yield u'\n<div style="border-bottom: 1px solid #cccccc;">\n  <h1>\u7ba1\u7406\u30da\u30fc\u30b8</h1>\n</div><br>\n'
+    l_i = missing
+    l_lectures = context.resolve('lectures')
+    for l_i, l_loop in LoopContext(context.call(l_range, 4)):
+        if 0: yield None
+        yield u'\n  <h3>%s\u56de\u751f</h3>\n  <table class="table" width="100%%">\n  ' % (
+            escape((l_i + 1)), 
+        )
+        t_1 = l_loop
+        l_lecture = missing
+        for l_lecture, l_loop in LoopContext(environment.getitem(l_lectures, l_i)):
+            if 0: yield None
+            yield u'\n    '
+            if (environment.getattr(l_loop, 'index') % 2) == 1:
+                if 0: yield None
+                yield u'<tr>'
+            yield u'\n    <td width="50%%"><div style="font-size: 16px"><a href="manage/%s">%s</a></div></td>\n    ' % (
+                escape(environment.getattr(l_lecture, 'id')), 
+                escape(environment.getattr(l_lecture, 'name')), 
+            )
+            if (environment.getattr(l_loop, 'index') % 2) == 0:
+                if 0: yield None
+                yield u'</tr>'
+            yield u'\n    '
+            if (environment.getattr(l_loop, 'last') and (environment.getattr(l_loop, 'index') % 2) == 1):
+                if 0: yield None
+                yield u'<td></td></tr>'
+            yield u'\n  '
+        l_loop = t_1
+        l_lecture = missing
+        yield u'\n  </table>\n'
+    l_i = missing
+    yield u'\n'
+
+def block_title(context, environment=environment):
+    if 0: yield None
+    yield u'\u7ba1\u7406\u30da\u30fc\u30b8'
+
+blocks = {'url': block_url, 'content': block_content, 'title': block_title}
+debug_info = '1=8&2=14&4=18&8=24&9=27&11=31&12=34&13=38&14=41&15=45&16=51&18=53&3=55'

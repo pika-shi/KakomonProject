@@ -88,7 +88,7 @@ def manage_lectures(request, id):
     if kakomon: kakomon.delete()
     mimetype = request.files['file'].content_type
     ext = request.files['file'].filename.split('.')[1]
-    Kakomon(lecture=lecture, year=upload_form['year'],
+    Kakomon(lecture=lecture, year=upload_form['year'], teacher=upload_form['teacher'],
             file=upload_form['file'], mimetype=mimetype, ext=ext).put()
 
   elif request.method == "POST" and delete_form.validate(request.form) and delete_form['years']:

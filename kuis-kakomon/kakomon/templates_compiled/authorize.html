@@ -1,0 +1,52 @@
+from __future__ import division
+from jinja2.runtime import LoopContext, TemplateReference, Macro, Markup, TemplateRuntimeError, missing, concat, escape, markup_join, unicode_join, to_string, TemplateNotFound
+name = '/authorize.html'
+
+def root(context, environment=environment):
+    parent_template = None
+    if 0: yield None
+    parent_template = environment.get_template('kakomon/base.html', '/authorize.html')
+    for name, parent_block in parent_template.blocks.iteritems():
+        context.blocks.setdefault(name, []).append(parent_block)
+    for event in parent_template.root_render_func(context):
+        yield event
+
+def block_content(context, environment=environment):
+    l_range = context.resolve('range')
+    l_method = context.resolve('method')
+    l_form = context.resolve('form')
+    t_1 = environment.filters['safe']
+    if 0: yield None
+    yield u'\n<div align="center">\n  <div class="row">\n    <div class="span4"></div>\n    <div class="span4">\n'
+    if l_method == 'POST':
+        if 0: yield None
+        yield u'\n    <div class="alert alert-error">\n      '
+        l_i = missing
+        for l_i in context.call(l_range, 10):
+            if 0: yield None
+            yield u'&nbsp;'
+        l_i = missing
+        yield u'\n      \u30d1\u30b9\u30ef\u30fc\u30c9\u304c\u9055\u3044\u307e\u3059\uff0e\n    </div>\n  '
+    yield u'\n    </div>\n    <div class="span4"></div>\n  </div>\n'
+    def macro():
+        t_2 = []
+        l_form = context.resolve('form')
+        pass
+        t_2.extend((
+            u'\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getitem(l_form, 'password'), 'label'), class_='pass_label'))), 
+            u'\n  ', 
+            escape(t_1(context.call(environment.getattr(environment.getitem(l_form, 'password'), 'render')))), 
+            u'\n  <div style="padding-top: 5px;">\n    <button type="submit" value="Submit" class="btn">\u30ed\u30b0\u30a4\u30f3</button>\n  </div>\n', 
+        ))
+        return Markup(concat(t_2))
+    caller = Macro(environment, macro, None, (), (), False, False, False)
+    yield context.call(l_form, caller=caller)
+    yield u'\n</div>\n'
+
+def block_title(context, environment=environment):
+    if 0: yield None
+    yield u'\u30ed\u30b0\u30a4\u30f3'
+
+blocks = {'content': block_content, 'title': block_title}
+debug_info = '1=8&3=14&8=21&10=25&13=30&17=31&18=37&19=39&17=44&23=45&2=47'
