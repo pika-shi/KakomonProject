@@ -5,6 +5,13 @@
 <div style="border-bottom: 1px solid #cccccc;">
   <h1>管理ページ</h1>
 </div><br>
+{% if flag == 'add' %}
+<div class ="well" style="font-size: 17px;">講義を追加しました</div>
+{% endif %}
+{% if flag == 'delete' %}
+<div class ="well" style="font-size: 17px;">講義を削除しました</div>
+{% endif %}
+<div style="font-size: 18px" align=right><a href="manage/add_lectures">講義の追加</a></div>
 {% for i in range(4) %}
   <h3>{{ i+1 }}回生</h3>
   <table class="table" width="100%">

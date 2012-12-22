@@ -29,7 +29,7 @@ from werkzeug import redirect, Response
 from kay.utils import (render_to_response, url_for)
 
 from kakomon.models import (Lecture, Kakomon)
-from kakomon.forms import (PasswordForm, UploadForm, CommentForm, DeleteForm)
+from kakomon.forms import (PasswordForm, AddForm, UploadForm, CommentForm, DeleteForm)
 
 def index(request):
   '''
@@ -45,13 +45,19 @@ def index(request):
 
 def lectures(request, grade):
   kakomons_dict = {}
+  year_list = [2008, 2009, 2010, 2011, 2012, 2013, 2014]
   lectures = Lecture.all().filter('grade =', grade)
   for lecture in lectures:
-    kakomons_dict[lecture.id] = Kakomon.all().filter('lecture =', lecture)
+    kakomons_dict[lecture.id] = []
+    for year in year_list:
+      if Kakomon.all().filter('lecture =', lecture).filter('year =', year).get():
+        kakomons_dict[lecture.id].append(Kakomon.all().filter('lecture =', lecture).filter('year =', year))
+    #kakomons_dict[lecture.id] = Kakomon.all().filter('lecture =', lecture)
   return render_to_response('kakomon/lectures.html',
                             {'grade'   : grade,
                              'lectures': lectures,
-                             'kakomons_dict': kakomons_dict})
+                             'kakomons_dict': kakomons_dict,
+                             'year_list': year_list})
 
 def download(request, id, name, year, ext):
   lecture = Lecture.all().filter('id =', id).get()
@@ -101,6 +107,9 @@ def manage_lectures(request, id):
     edit_flag = 'comment'
     lecture.comment = comment_form['comment']
 
+  elif request.method == "POST":
+    lecture.delete()
+    return redirect(url_for('kakomon/manage'))
   years = []
   for kakomon in Kakomon.all().filter('lecture =', lecture).order('year'):
     years.append(kakomon.year)
@@ -113,3 +122,12 @@ def manage_lectures(request, id):
                              'lecture': lecture,
                              'years': years,
                              'flag': edit_flag})
+
+def add_lectures(request):
+  add_form = AddForm()
+  if request.method == "POST" and add_form.validate(request.form):
+    Lecture(id=add_form['id'], name=add_form['name'], grade=add_form['grade'],
+            comment=add_form['comment'] ).put()
+    return redirect(url_for('kakomon/manage'))
+  return render_to_response('kakomon/add_lectures.html',
+                            {'add_form': add_form.as_widget()})

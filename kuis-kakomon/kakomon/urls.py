@@ -30,6 +30,7 @@ view_groups = [
     Rule('/authorize', endpoint='authorize', view='kakomon.views.authorize'),
     Rule('/manage', endpoint='manage', view='kakomon.views.manage'),
     Rule('/manage/<int:id>', endpoint='manage_lectures', view='kakomon.views.manage_lectures'),
+    Rule('/manage/add_lectures', endpoint='add_lectures', view='kakomon.views.add_lectures'),
   )
 ]
 

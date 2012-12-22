@@ -12,6 +12,8 @@
 {% elif flag == 'delete' %}
 <div class ="well" style="font-size: 17px;">ファイルを削除しました</div>
 {% endif %}
+<div style="font-size: 18px" align=right><a href="/manage">管理ページトップ</a></div>
+
 <div style="font-size: 18px;"><input type="checkbox" name="upload" value="check"
      onclick="formAppear('upload');" />&nbsp;ファイルのアップロード</div><br>
 <div class="row" id="upload">
@@ -38,7 +40,7 @@
   <div class="span11">
     {% call comment_form() %}
     {{ comment_form['comment'].label(class_="edit_label")|safe }}
-    {{ comment_form['comment'].render()|safe }}
+    {{ comment_form['comment'].render(value_="text")|safe }}
     <div style="padding-top: 15px;">
       <button type="submit" value="Submit" class="btn">更新</button>
     </div>
@@ -46,22 +48,37 @@
   </div>
 </div>
 
-<div style="font-size: 18px;"><input type="checkbox" name="delete" value="check"
-     onclick="formAppear('delete');" />&nbsp;ファイルの削除</div><br>
-<div class="row" id="delete">
+<div style="font-size: 18px;"><input type="checkbox" name="deleteFile" value="check"
+     onclick="formAppear('deleteFile');" />&nbsp;ファイルの削除</div><br>
+<div class="row" id="deleteFile">
   <div class="span1"></div>
   <div class="span11">
     <div class="delete">
       {% call delete_form() %}
       {{ delete_form['years'].render()|safe }}
       <div class="actions" style="padding-top: 5px;">
-        <button type="submit" value="Submit" class="btn"
-     onclick="return confirm('本当に削除しますか');">削除</button>
+          <button type="submit" value="Submit" class="btn"
+            onclick="return confirm('本当に削除しますか');">削除</button>
       </div>
       {% endcall %}
     </div>
   </div>
 </div>
+
+<div style="font-size: 18px;"><input type="checkbox" name="deleteLecture" value="check"
+     onclick="formAppear('deleteLecture');" />&nbsp;講義の削除</div><br>
+<div class="row" id="deleteLecture">
+  <div class="span1"></div>
+  <div class="span11">
+    <div style="padding-top: 15px;">
+       <form action="" method="post" enctype="multipart/form-data">
+         <button type="submit" value="Submit" class="btn"
+           onclick="return confirm('本当に削除しますか');">削除</button>
+       </form>
+    </div>
+  </div>
+</div>
+
 {{ tmp }}
 {% endblock %}
 {% block js %}
@@ -72,7 +89,8 @@ function uploadConfirm() {
   years.push({{ year }});
   {% endfor %}
   index = document.getElementsByName('year')[0].selectedIndex;
-  selectedYear = document.getElementsByName('year')[0].options[index].value;
+  selectedYear =
+  document.getElementsByName('year')[0].options[index].value;
   for (var i = 0; i < years.length; i++) {
     if (years[i] == selectedYear) {
       return confirm(selectedYear + '年のファイルはすでに存在しますがアップロードしますか');
@@ -92,7 +110,8 @@ function formAppear(check) {
 window.onload = function() {
   document.getElementById('upload').style.display = "none";
   document.getElementById('comment').style.display = "none";
-  document.getElementById('delete').style.display = "none";
+  document.getElementById('deleteFile').style.display = "none";
+  document.getElementById('deleteLecture').style.display = "none";
 }
 </script>
 {% endblock %}

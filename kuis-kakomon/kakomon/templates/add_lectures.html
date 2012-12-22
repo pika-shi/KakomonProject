@@ -1,0 +1,26 @@
+{% extends "kakomon/base.html" %}
+{% block url %}"/manage"{% endblock %}
+{% block title %}講義の追加{% endblock %}
+{% block content %}
+<div style="border-bottom: 1px solid #cccccc;">
+  <h2>講義の追加</h2>
+</div><br>
+<div class="row" id="upload">
+  <div class="span1"></div>
+  <div class="span11">
+    {% call add_form() %}
+    {{ add_form['id'].label(class_="edit_label")|safe }}
+    {{ add_form['id'].render()|safe }}
+    {{ add_form['name'].label(class_="edit_label")|safe }}
+    {{ add_form['name'].render()|safe }}
+    {{ add_form['grade'].label(class_="edit_label")|safe }}
+    {{ add_form['grade'].render()|safe }}
+    {{ add_form['comment'].label(class_="edit_label")|safe }}
+    {{ add_form['comment'].render()|safe }}
+    <div style="padding-top: 15px;">
+      <button type="submit" value="Submit" class="btn">追加</button>
+    </div>
+    {% endcall %}
+  </div>
+</div>
+{% endblock %}

@@ -15,8 +15,7 @@
   過去問:&nbsp;
   {% for kakomon in kakomons_dict[lecture.id] %}
     <a href="/download/{{ lecture.id }}/{{ lecture.name }}_{{
-             kakomon.year }}.{{ kakomon.ext }}">{{ kakomon.year }}年 ({{
-    kakomon.teacher }})</a>&nbsp;&nbsp;
+             kakomon[0].year }}.{{ kakomon[0].ext }}">{{ kakomon[0].year }}年</a>&nbsp;({{kakomon[0].teacher }})&nbsp;&nbsp;
   {% endfor %}
   </div>
   </div>
