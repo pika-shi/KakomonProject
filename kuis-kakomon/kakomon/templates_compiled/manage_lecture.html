@@ -40,7 +40,7 @@ def block_content(context, environment=environment):
             if l_flag == 'delete':
                 if 0: yield None
                 yield u'\n<div class ="well" style="font-size: 17px;">\u30d5\u30a1\u30a4\u30eb\u3092\u524a\u9664\u3057\u307e\u3057\u305f</div>\n'
-    yield u'\n<div style="font-size: 18px;"><input type="checkbox" name="upload" value="check"\n     onclick="formAppear(\'upload\');" />&nbsp;\u30d5\u30a1\u30a4\u30eb\u306e\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9</div><br>\n<div class="row" id="upload">\n  <div class="span1"></div>\n  <div class="span11">\n    '
+    yield u'\n<div style="font-size: 18px" align=right><a href="/manage">\u7ba1\u7406\u30da\u30fc\u30b8\u30c8\u30c3\u30d7</a></div>\n\n<div style="font-size: 18px;"><input type="checkbox" name="upload" value="check"\n     onclick="formAppear(\'upload\');" />&nbsp;\u30d5\u30a1\u30a4\u30eb\u306e\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9</div><br>\n<div class="row" id="upload">\n  <div class="span1"></div>\n  <div class="span11">\n    '
     def macro():
         t_2 = []
         l_file_form = context.resolve('file_form')
@@ -72,13 +72,13 @@ def block_content(context, environment=environment):
             u'\n    ', 
             escape(t_1(context.call(environment.getattr(environment.getitem(l_comment_form, 'comment'), 'label'), class_='edit_label'))), 
             u'\n    ', 
-            escape(t_1(context.call(environment.getattr(environment.getitem(l_comment_form, 'comment'), 'render')))), 
+            escape(t_1(context.call(environment.getattr(environment.getitem(l_comment_form, 'comment'), 'render'), value_='text'))), 
             u'\n    <div style="padding-top: 15px;">\n      <button type="submit" value="Submit" class="btn">\u66f4\u65b0</button>\n    </div>\n    ', 
         ))
         return Markup(concat(t_3))
     caller = Macro(environment, macro, None, (), (), False, False, False)
     yield context.call(l_comment_form, caller=caller)
-    yield u'\n  </div>\n</div>\n\n<div style="font-size: 18px;"><input type="checkbox" name="delete" value="check"\n     onclick="formAppear(\'delete\');" />&nbsp;\u30d5\u30a1\u30a4\u30eb\u306e\u524a\u9664</div><br>\n<div class="row" id="delete">\n  <div class="span1"></div>\n  <div class="span11">\n    <div class="delete">\n      '
+    yield u'\n  </div>\n</div>\n\n<div style="font-size: 18px;"><input type="checkbox" name="deleteFile" value="check"\n     onclick="formAppear(\'deleteFile\');" />&nbsp;\u30d5\u30a1\u30a4\u30eb\u306e\u524a\u9664</div><br>\n<div class="row" id="deleteFile">\n  <div class="span1"></div>\n  <div class="span11">\n    <div class="delete">\n      '
     def macro():
         t_4 = []
         l_delete_form = context.resolve('delete_form')
@@ -86,12 +86,12 @@ def block_content(context, environment=environment):
         t_4.extend((
             u'\n      ', 
             escape(t_1(context.call(environment.getattr(environment.getitem(l_delete_form, 'years'), 'render')))), 
-            u'\n      <div class="actions" style="padding-top: 5px;">\n        <button type="submit" value="Submit" class="btn"\n     onclick="return confirm(\'\u672c\u5f53\u306b\u524a\u9664\u3057\u307e\u3059\u304b\');">\u524a\u9664</button>\n      </div>\n      ', 
+            u'\n      <div class="actions" style="padding-top: 5px;">\n          <button type="submit" value="Submit" class="btn"\n            onclick="return confirm(\'\u672c\u5f53\u306b\u524a\u9664\u3057\u307e\u3059\u304b\');">\u524a\u9664</button>\n      </div>\n      ', 
         ))
         return Markup(concat(t_4))
     caller = Macro(environment, macro, None, (), (), False, False, False)
     yield context.call(l_delete_form, caller=caller)
-    yield u'\n    </div>\n  </div>\n</div>\n%s\n' % (
+    yield u'\n    </div>\n  </div>\n</div>\n\n<div style="font-size: 18px;"><input type="checkbox" name="deleteLecture" value="check"\n     onclick="formAppear(\'deleteLecture\');" />&nbsp;\u8b1b\u7fa9\u306e\u524a\u9664</div><br>\n<div class="row" id="deleteLecture">\n  <div class="span1"></div>\n  <div class="span11">\n    <div style="padding-top: 15px;">\n       <form action="" method="post" enctype="multipart/form-data">\n         <button type="submit" value="Submit" class="btn"\n           onclick="return confirm(\'\u672c\u5f53\u306b\u524a\u9664\u3057\u307e\u3059\u304b\');">\u524a\u9664</button>\n       </form>\n    </div>\n  </div>\n</div>\n\n%s\n' % (
         escape(l_tmp), 
     )
 
@@ -106,7 +106,7 @@ def block_js(context, environment=environment):
             escape(l_year), 
         )
     l_year = missing
-    yield u'\n  index = document.getElementsByName(\'year\')[0].selectedIndex;\n  selectedYear = document.getElementsByName(\'year\')[0].options[index].value;\n  for (var i = 0; i < years.length; i++) {\n    if (years[i] == selectedYear) {\n      return confirm(selectedYear + \'\u5e74\u306e\u30d5\u30a1\u30a4\u30eb\u306f\u3059\u3067\u306b\u5b58\u5728\u3057\u307e\u3059\u304c\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u307e\u3059\u304b\');\n    }\n  }\n}\n\nfunction formAppear(check) {\n  element = document.getElementsByName(check);\n  if (element[0].checked) {\n    document.getElementById(check).style.display = "";\n  } else {\n    document.getElementById(check).style.display = "none";\n  }\n}\n\nwindow.onload = function() {\n  document.getElementById(\'upload\').style.display = "none";\n  document.getElementById(\'comment\').style.display = "none";\n  document.getElementById(\'delete\').style.display = "none";\n}\n</script>\n'
+    yield u'\n  index = document.getElementsByName(\'year\')[0].selectedIndex;\n  selectedYear =\n  document.getElementsByName(\'year\')[0].options[index].value;\n  for (var i = 0; i < years.length; i++) {\n    if (years[i] == selectedYear) {\n      return confirm(selectedYear + \'\u5e74\u306e\u30d5\u30a1\u30a4\u30eb\u306f\u3059\u3067\u306b\u5b58\u5728\u3057\u307e\u3059\u304c\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u307e\u3059\u304b\');\n    }\n  }\n}\n\nfunction formAppear(check) {\n  element = document.getElementsByName(check);\n  if (element[0].checked) {\n    document.getElementById(check).style.display = "";\n  } else {\n    document.getElementById(check).style.display = "none";\n  }\n}\n\nwindow.onload = function() {\n  document.getElementById(\'upload\').style.display = "none";\n  document.getElementById(\'comment\').style.display = "none";\n  document.getElementById(\'deleteFile\').style.display = "none";\n  document.getElementById(\'deleteLecture\').style.display = "none";\n}\n</script>\n'
 
 def block_title(context, environment=environment):
     l_lecture = context.resolve('lecture')
@@ -115,4 +115,4 @@ def block_title(context, environment=environment):
     yield u'\u306e\u7de8\u96c6'
 
 blocks = {'url': block_url, 'content': block_content, 'js': block_js, 'title': block_title}
-debug_info = '1=8&2=14&4=18&6=28&8=30&10=35&12=40&14=43&20=44&21=50&22=52&23=54&24=56&25=58&26=60&20=65&30=66&39=67&40=73&41=75&39=80&45=81&55=82&56=88&55=93&61=94&65=95&67=98&71=103&72=106&73=109&3=111'
+debug_info = '1=8&2=14&4=18&6=28&8=30&10=35&12=40&14=43&22=44&23=50&24=52&25=54&26=56&27=58&28=60&22=65&32=66&41=67&42=73&43=75&41=80&47=81&57=82&58=88&57=93&63=94&82=95&84=98&88=103&89=106&90=109&3=111'

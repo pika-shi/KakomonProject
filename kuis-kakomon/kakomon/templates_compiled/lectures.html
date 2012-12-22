@@ -32,13 +32,13 @@ def block_content(context, environment=environment):
         l_kakomon = missing
         for l_kakomon in environment.getitem(l_kakomons_dict, environment.getattr(l_lecture, 'id')):
             if 0: yield None
-            yield u'\n    <a href="/download/%s/%s_%s.%s">%s\u5e74 (%s)</a>&nbsp;&nbsp;\n  ' % (
+            yield u'\n    <a href="/download/%s/%s_%s.%s">%s\u5e74</a>&nbsp;(%s)&nbsp;&nbsp;\n  ' % (
                 escape(environment.getattr(l_lecture, 'id')), 
                 escape(environment.getattr(l_lecture, 'name')), 
-                escape(environment.getattr(l_kakomon, 'year')), 
-                escape(environment.getattr(l_kakomon, 'ext')), 
-                escape(environment.getattr(l_kakomon, 'year')), 
-                escape(environment.getattr(l_kakomon, 'teacher')), 
+                escape(environment.getattr(environment.getitem(l_kakomon, 0), 'year')), 
+                escape(environment.getattr(environment.getitem(l_kakomon, 0), 'ext')), 
+                escape(environment.getattr(environment.getitem(l_kakomon, 0), 'year')), 
+                escape(environment.getattr(environment.getitem(l_kakomon, 0), 'teacher')), 
             )
         l_kakomon = missing
         yield u'\n  </div>\n  </div>\n  <br>\n'
@@ -52,4 +52,4 @@ def block_title(context, environment=environment):
     yield u'\u56de\u751f'
 
 blocks = {'content': block_content, 'title': block_title}
-debug_info = '1=8&3=14&5=19&7=21&8=25&10=28&11=29&12=30&16=33&17=36&18=38&19=41&20=44&24=46&2=48'
+debug_info = '1=8&3=14&5=19&7=21&8=25&10=28&11=29&12=30&16=33&17=36&18=38&19=44&23=46&2=48'

@@ -16,9 +16,18 @@ def block_url(context, environment=environment):
     yield u'"/manage"'
 
 def block_content(context, environment=environment):
+    l_flag = context.resolve('flag')
     l_range = context.resolve('range')
     if 0: yield None
     yield u'\n<div style="border-bottom: 1px solid #cccccc;">\n  <h1>\u7ba1\u7406\u30da\u30fc\u30b8</h1>\n</div><br>\n'
+    if l_flag == 'add':
+        if 0: yield None
+        yield u'\n<div class ="well" style="font-size: 17px;">\u8b1b\u7fa9\u3092\u8ffd\u52a0\u3057\u307e\u3057\u305f</div>\n'
+    yield u'\n'
+    if l_flag == 'delete':
+        if 0: yield None
+        yield u'\n<div class ="well" style="font-size: 17px;">\u8b1b\u7fa9\u3092\u524a\u9664\u3057\u307e\u3057\u305f</div>\n'
+    yield u'\n<div style="font-size: 18px" align=right><a href="manage/add_lectures">\u8b1b\u7fa9\u306e\u8ffd\u52a0</a></div>\n'
     l_i = missing
     l_lectures = context.resolve('lectures')
     for l_i, l_loop in LoopContext(context.call(l_range, 4)):
@@ -57,4 +66,4 @@ def block_title(context, environment=environment):
     yield u'\u7ba1\u7406\u30da\u30fc\u30b8'
 
 blocks = {'url': block_url, 'content': block_content, 'title': block_title}
-debug_info = '1=8&2=14&4=18&8=24&9=27&11=31&12=34&13=38&14=41&15=45&16=51&18=53&3=55'
+debug_info = '1=8&2=14&4=18&8=23&10=26&11=27&13=30&15=33&16=36&18=40&19=43&20=47&21=50&22=54&23=60&25=62&3=64'
