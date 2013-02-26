@@ -16,6 +16,7 @@ SECRET_KEY = 'ReplaceItWithSecretString'
 SESSION_PREFIX = 'gaesess:'
 COOKIE_AGE = 1209600 # 2 weeks
 COOKIE_NAME = 'KAY_SESSION'
+CACHE_MIDDLEWARE_SECONDS = 259200 # 3 days
 
 ADD_APP_PREFIX_TO_KIND = True
 
@@ -44,3 +45,8 @@ CONTEXT_PROCESSORS = (
   'kay.context_processors.url_functions',
   'kay.context_processors.media_url',
 )
+
+MIDDLEWARE_CLASSES = (
+  'kay.auth.middleware.AuthenticationMiddleware',
+  'kay.cache.middleware.CacheMiddleware',
+    )

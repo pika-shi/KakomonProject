@@ -14,6 +14,7 @@ def root(context, environment=environment):
 def block_content(context, environment=environment):
     l_grade = context.resolve('grade')
     l_lectures = context.resolve('lectures')
+    t_1 = environment.filters['safe']
     if 0: yield None
     yield u'\n<div style="border-bottom: 1px solid #cccccc;">\n  <h1>%s\u56de\u751f</h1>\n</div><br>\n' % (
         escape(l_grade), 
@@ -24,11 +25,15 @@ def block_content(context, environment=environment):
     l_kakomons_dict = context.resolve('kakomons_dict')
     for l_lecture in l_lectures:
         if 0: yield None
-        yield u'\n  <div class="well" style="padding-top:0px;">\n  <h3>%s</h3>\n  <div class="alert alert-%s">\n    <div style="color: #333333; font-size: 15px;">%s</div>\n  </div>\n  <div style="font-size: 16px;">\n  \u904e\u53bb\u554f:&nbsp;\n  ' % (
+        yield u'\n  <div class="well" style="padding-top:0px;">\n  <h3>%s</h3>\n  <div class="alert alert-%s">\n    <div style="color: #333333; font-size: 15px;"><p style="line-height: 25px">%s</p></div>\n  </div>\n  <div style="font-size: 16px;">\n  ' % (
             escape(environment.getattr(l_lecture, 'name')), 
             escape(environment.getitem(l_alert_list, (l_grade - 1))), 
-            escape(environment.getattr(l_lecture, 'comment')), 
+            escape(t_1(environment.getattr(l_lecture, 'comment'))), 
         )
+        if environment.getitem(l_kakomons_dict, environment.getattr(l_lecture, 'id')):
+            if 0: yield None
+            yield u'\n  \u904e\u53bb\u554f:&nbsp;\n  '
+        yield u'\n  '
         l_kakomon = missing
         for l_kakomon in environment.getitem(l_kakomons_dict, environment.getattr(l_lecture, 'id')):
             if 0: yield None
@@ -52,4 +57,4 @@ def block_title(context, environment=environment):
     yield u'\u56de\u751f'
 
 blocks = {'content': block_content, 'title': block_title}
-debug_info = '1=8&3=14&5=19&7=21&8=25&10=28&11=29&12=30&16=33&17=36&18=38&19=44&23=46&2=48'
+debug_info = '1=8&3=14&5=20&7=22&8=26&10=29&11=30&12=31&15=33&17=36&18=38&19=41&20=43&21=49&25=51&2=53'

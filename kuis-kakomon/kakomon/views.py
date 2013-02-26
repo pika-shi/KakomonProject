@@ -67,7 +67,7 @@ def download(request, id, name, year, ext):
 def authorize(request):
   form = PasswordForm()
   if request.method == "POST" and form.validate(request.form):
-    if form['password'] == 'pika_shi':
+    if form['password'] == 'you_are_beautiful':
       return redirect(url_for('kakomon/manage'))
   return render_to_response('kakomon/authorize.html',
                             {'form'  : form.as_widget(),
@@ -105,7 +105,8 @@ def manage_lectures(request, id):
 
   elif request.method == "POST" and comment_form.validate(request.form):
     edit_flag = 'comment'
-    lecture.comment = comment_form['comment']
+    lecture.comment = comment_form['comment'].replace('\r\n', '\n').replace('\n', '<br/>')
+    lecture.put()
 
   elif request.method == "POST":
     lecture.delete()

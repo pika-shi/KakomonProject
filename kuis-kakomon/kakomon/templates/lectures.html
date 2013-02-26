@@ -9,10 +9,12 @@
   <div class="well" style="padding-top:0px;">
   <h3>{{ lecture.name }}</h3>
   <div class="alert alert-{{ alert_list[grade-1] }}">
-    <div style="color: #333333; font-size: 15px;">{{ lecture.comment}}</div>
+    <div style="color: #333333; font-size: 15px;"><p style="line-height: 25px">{{ lecture.comment|safe }}</p></div>
   </div>
   <div style="font-size: 16px;">
+  {% if kakomons_dict[lecture.id] %}
   過去問:&nbsp;
+  {% endif %}
   {% for kakomon in kakomons_dict[lecture.id] %}
     <a href="/download/{{ lecture.id }}/{{ lecture.name }}_{{
              kakomon[0].year }}.{{ kakomon[0].ext }}">{{ kakomon[0].year }}年</a>&nbsp;({{kakomon[0].teacher }})&nbsp;&nbsp;
